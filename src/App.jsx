@@ -26,6 +26,7 @@ export default function App() {
 
   return (
     <Router>
+      <div className="app-container">
       <Header />
       <Nav />
       <Routes>
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/comics" element={<Gallery comics={comics} agregarAlCarrito={agregarAlCarrito} />} />
       </Routes>
       <Footer />
+      </div>
     </Router>
   );
 }

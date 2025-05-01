@@ -1,0 +1,23 @@
+.nav {
+    background-color: #0f3460;
+    padding: 1rem;
+    font-family:'Bangers';
+}
+.nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.nav li {
+    margin: 0 1rem;
+}
+.nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.nav a:hover {
+    color: #dfec23;
+}

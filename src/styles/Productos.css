@@ -16,17 +16,23 @@
     text-align: center;
     font-family: 'Bangers', cursive;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    height: 350px; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
 }
 .producto-card h3 {
-    white-space: nowrap;
+    white-space: 
+    nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.producto-card p {
+    max-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 
 .producto-image{

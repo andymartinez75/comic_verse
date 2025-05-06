@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import "../styles/Productos.css"
 import Card from "./Card.jsx"
-import Carrito from "./Carrito.jsx"
+
 
 function ProductosContainer(){
     const [productos, setProductos] = useState([])
@@ -40,7 +40,7 @@ function ProductosContainer(){
             })
             setProductosCarrito(carritoActualizado)
         }else{
-            // Si no existe, lo agregamos con su cantidad
+            
             const nuevoCarrito = [...productosCarrito, producto];
             setProductosCarrito(nuevoCarrito)
         }

@@ -6,7 +6,7 @@ function Card({producto, funcionCarrito}){
     
     function agregarAlCarrito() {
         if (cantidad < 1) return;
-        funcionCarrito({ ...producto, cantidad }); // Pasamos también la cantidad
+        funcionCarrito({ ...producto, cantidad }); 
     }
 
     function sumarContador() {

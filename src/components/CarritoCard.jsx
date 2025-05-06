@@ -1,10 +1,10 @@
 import "../styles/Carrito.css"
 
-function CarritoCard({producto, funcionCarrito}){
+function CarritoCard({producto, funcionDisparadora}){
     
-    function agregarAlCarrito() {
+    function borrarDelCarrito() {
         console.log("Paso 1")
-        funcionCarrito(producto)
+        funcionDisparadora(producto.id)
     }
 
     return(
@@ -22,7 +22,7 @@ function CarritoCard({producto, funcionCarrito}){
                 <span style={{color:"black"}}>{producto.cantidad * producto.price} $</span>
             </div>
 
-            <button className="boton-carrito" onClick={agregarAlCarrito} style={{backgroundColor: "yellow" ,color:"black"}}>X</button>
+            <button className="boton-carrito" onClick={borrarDelCarrito} style={{backgroundColor: "yellow" ,color:"black"}}>X</button>
         </div>
     )
 }

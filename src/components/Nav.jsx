@@ -7,8 +7,8 @@ return (
     <nav className="nav">
     <ul>
         <li><Link to="/">Inicio</Link></li>
-        <li><Link to="/comics">Comics</Link></li>
-        <li><Link to="/carrito">Carrito</Link></li>
+        <li><Link to="/comics">Acerca de</Link></li>
+        <li><Link to="/contacto">Contacto</Link></li>
     </ul>
     </nav>
 );

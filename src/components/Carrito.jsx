@@ -2,12 +2,16 @@ import "../styles/Carrito.css"
 /*import { useEffect, useState } from "react";*/
 import CarritoCard from "./CarritoCard.jsx";
 
-export default function Carrito({productosCarrito}) {
+export default function Carrito({productosCarrito, funcionBorrar}) {
     console.log("Productos: " + productosCarrito)
 
     const total = productosCarrito.reduce(
         (subTotal, producto) => subTotal + producto.price * producto.cantidad, 0
-    );
+    )
+
+    function funcionDisparadora(id){
+        funcionBorrar(id)
+    }
 
     console.log("Total: " + total);
 
@@ -16,7 +20,9 @@ export default function Carrito({productosCarrito}) {
             <div className="carrito-conteiner">
             {productosCarrito.length > 0 ? (
                 productosCarrito.map((producto) => (
-                <CarritoCard key ={producto.id} producto={producto}/>))
+                <CarritoCard key ={producto.id} producto={producto}
+                funcionDisparadora={funcionDisparadora}
+                />))
                 )
             : (
             <p>Carrito vacio</p>

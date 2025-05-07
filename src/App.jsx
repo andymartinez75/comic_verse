@@ -7,6 +7,8 @@ import ProductosContainer from './components/ProductosContainer'
 import Carrito from './components/Carrito'
 import About from './components/About' 
 import Contacto from './components/Contacto' 
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 function App() {
   const [productosCarrito, setProductosCarrito] = useState([])
@@ -32,7 +34,9 @@ function App() {
 
   return (
     <div>
+      <Header/>
       <Nav />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<ProductosContainer functionCarrito={funcionCarrito} />} />
@@ -40,6 +44,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contacto" element={<Contacto />} />
       </Routes>
+
+      <Footer/>
     </div>
   )
 }

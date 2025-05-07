@@ -9,9 +9,7 @@ function Home() {
     return(
         
             <div>
-                <Header/>
-                <Main/>
-                <Footer/>                              
+                <Main/>                              
             </div>
             
     )

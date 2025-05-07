@@ -29,6 +29,14 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+
+  background-image: url('../src/assets/4851275.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-color: #0f3460; /* Color de respaldo */
+  color: white;
 }
 
 h1 {

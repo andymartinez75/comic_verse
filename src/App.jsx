@@ -9,6 +9,8 @@ import About from './components/About'
 import Contacto from './components/Contacto' 
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Swal from 'sweetalert2'
+
 
 function App() {
   const [productosCarrito, setProductosCarrito] = useState([])
@@ -25,12 +27,34 @@ function App() {
     } else {
       setProductosCarrito([...productosCarrito, producto])
     }
-  }
+  
+  Swal.fire({
+    title: '¡Agregado!',
+    text: `${producto.nombre} fue agregado al carrito.`,
+    icon: 'success',
+    timer: 1500,
+    showConfirmButton: false,
+    background: '#0f3460',
+    color: '#dfec23'
+  })
+}
 
   function borrarProductoCarrito(id) {
     const nuevoCarrito = productosCarrito.filter(p => p.id !== id)
     setProductosCarrito(nuevoCarrito)
-  }
+  
+
+  Swal.fire({
+    title: 'Eliminado',
+    text: 'Producto quitado del carrito.',
+    icon: 'warning',
+    timer: 1500,
+    showConfirmButton: false,
+    background: '#0f3460',
+    color: '#dfec23'
+  })
+}
+
 
   return (
     <div>

@@ -1,0 +1,14 @@
+.contacto{
+    background-color: #0f3460;
+    color: #ffffff;
+    font-family: 'Comic+Neue', cursive;
+    padding: 2rem;
+    border-top: 3px solid #dfec23;
+    border-bottom: 3px solid #dfec23;
+    text-align: center;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 2rem auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(223, 236, 35, 0.3);
+}

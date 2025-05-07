@@ -11,8 +11,7 @@ function Home() {
             <div>
                 <Header/>
                 <Main/>
-                <Footer/>
-                              
+                <Footer/>                              
             </div>
             
     )

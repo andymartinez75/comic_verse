@@ -54,6 +54,25 @@ function App() {
     color: '#dfec23'
   })
 }
+function aumentarCantidad(id) {
+  const actualizado = productosCarrito.map((p) =>
+    p.id === id ? { ...p, cantidad: p.cantidad + 1 } : p
+  );
+  setProductosCarrito(actualizado);
+}
+
+function reducirCantidad(id) {
+  const producto = productosCarrito.find((p) => p.id === id);
+  if (producto.cantidad === 1) {
+    borrarProductoCarrito(id);
+  } else {
+    const actualizado = productosCarrito.map((p) =>
+      p.id === id ? { ...p, cantidad: p.cantidad - 1 } : p
+    );
+    setProductosCarrito(actualizado);
+  }
+}
+
 
 
   return (
@@ -64,7 +83,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<ProductosContainer functionCarrito={funcionCarrito} />} />
-        <Route path="/carrito" element={<Carrito productosCarrito={productosCarrito} funcionBorrar={borrarProductoCarrito} />} />
+        <Route path="/carrito" element={<Carrito 
+        productosCarrito={productosCarrito} 
+        funcionBorrar={borrarProductoCarrito}
+        aumentarCantidad={aumentarCantidad}
+        reducirCantidad={reducirCantidad} />} />
         <Route path="/about" element={<About />} />
         <Route path="/contacto" element={<Contacto />} />
       </Routes>

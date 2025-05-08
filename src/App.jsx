@@ -30,7 +30,7 @@ function App() {
   
   Swal.fire({
     title: '¡Agregado!',
-    text: `${producto.nombre} fue agregado al carrito.`,
+    text: `${producto.name} fue agregado al carrito.`,
     icon: 'success',
     timer: 1500,
     showConfirmButton: false,

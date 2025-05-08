@@ -21,10 +21,10 @@ function Card({producto, funcionCarrito}){
 
     return(
         <div className="producto-card" >
-            <h1 style={{color:"black"}}>{producto.name}</h1>
-            <p style={{color:"black"}}>{producto.description}</p>
+            <h1 style={{color:"white"}}>{producto.name}</h1>
+            <p style={{color:"white"}}>{producto.description}</p>
             <img className="producto-image" src={producto.imagen}></img>
-            <p style={{color:"black"}}>{producto.price} $</p>
+            <p style={{color:"white"}}>{producto.price} $</p>
             <div>
                 <button onClick={restarContador}>-</button>
                 <span style={{ margin: "0 10px", color:"black" }}>{cantidad}</span>

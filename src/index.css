@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue&family=Luckiest+Guy&display=swap');
 
 
+
 :root {
   font-family: Comic;
   line-height: 1.5;
@@ -29,7 +30,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-
+  max-width: 100%;
   background-image: url('../src/assets/4851275.jpg');
   background-size: cover;
   background-repeat: no-repeat;

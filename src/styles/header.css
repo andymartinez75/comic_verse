@@ -1,4 +1,4 @@
-.header {
+.header  {
     background-color: #1a1a2e;
     color: #ffffff;
     padding: 1rem 2rem;
@@ -10,6 +10,6 @@
 .logo {
     max-width: 120px; 
     height: auto;
-    display:block;
+    display:inline;
     margin: 0 auto 0.5rem auto; 
 }

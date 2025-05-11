@@ -26,7 +26,7 @@
     width: 200px;
     text-align: center;
     font-family: 'Comic+Neue', cursive;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgba(223, 236, 35, 0.3);
     display: flex;
     flex-direction: column;
     justify-content: space-between;

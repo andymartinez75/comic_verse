@@ -1,0 +1,72 @@
+.detalle-producto {
+text-align: center;
+color: #ffffff;
+padding: 2rem;
+max-width: 600px;
+margin: 0 auto;
+font-family: 'Bangers', cursive;
+background-color: #0f3460;
+border-radius: 10px;
+box-shadow: 0 0 15px rgba(223, 236, 35, 0.3);
+}
+.detalle-producto h1 {
+font-size: 2rem;
+color: #dfec23;
+margin-bottom: 1rem;
+}
+
+.detalle-producto p {
+font-family: 'Comic Neue', cursive;
+font-size: 1.1rem;
+margin-bottom: 1rem;
+}
+.detalle-producto img {
+width: 100%;
+max-width: 300px;
+height: auto;
+border-radius: 10px;
+margin-bottom: 1rem;
+object-fit: cover;
+}
+.controles-detalle {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 1rem;
+margin-bottom: 1.5rem;
+}
+
+.detalle-producto button {
+background-color: #dfec23;
+color: #0f3460;
+padding: 0.5rem 1rem;
+margin: 0.5rem;
+font-family: 'Bangers';
+font-size: 1.2rem;
+border-radius: 8px;
+cursor: pointer;
+border: none;
+transition: background-color 0.3s;
+}
+.detalle-producto button:hover {
+background-color: #fff55f;
+}
+.detalle-producto .cantidad {
+font-size: 1.2rem;
+margin: 0 10px;
+color: #dfec23;
+}
+@media (max-width: 480px) {
+.controles-detalle {
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.detalle-producto button {
+    width: 100%;
+}
+
+.detalle-producto {
+    padding: 1rem;
+}
+}

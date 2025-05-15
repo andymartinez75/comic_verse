@@ -11,44 +11,57 @@ export default function Carrito({
     (subTotal, producto) => subTotal + producto.price * producto.cantidad,
     0
 )
-
-function funcionDisparadora(id) {
-    funcionBorrar(id)
-}
-
 return (
     <div className="carrito-seccion">
-        <div className="carrito-conteiner">
-        {productosCarrito.length > 0 ? (
-        productosCarrito.map((producto) => (
-            <CarritoCard
-            key={producto.id}
-            producto={producto}
-            funcionDisparadora={funcionDisparadora}
-            aumentarCantidad={aumentarCantidad}
-            reducirCantidad={reducirCantidad}
+    <h2 className="carrito-titulo">Tu Carrito</h2>
+
+    {productosCarrito.length === 0 ? (
+        <p className="carrito-vacio">Carrito vacío</p>
+    ) : (
+        <div className="carrito-tabla">
+        <div className="carrito-fila encabezado">
+            <span>Producto</span>
+            <span>Descripción</span>
+            <span>Imagen</span>
+            <span>Cantidad</span>
+            <span>Precio unitario</span>
+            <span>Sub total</span>
+            <span></span>
+        </div>
+
+        {productosCarrito.map((producto) => (
+            <div key={producto.id} className="carrito-fila">
+            <strong>{producto.name}</strong>
+            <span>{producto.description}</span>
+            <img
+                src={producto.imagen}
+                alt={producto.name}
+                className="carrito-image"
             />
-        ))
-        ) : (
-        <p>Carrito vacío</p>
-        )}
-    </div>
+            <span>
+                <button onClick={() => reducirCantidad(producto.id)}>-</button>
+                <span style={{ margin: "0 8px" }}>{producto.cantidad}</span>
+                <button onClick={() => aumentarCantidad(producto.id)}>+</button>
+            </span>
+            <span>{producto.price.toFixed(2)} $</span>
+              <span>{(producto.price * producto.cantidad).toFixed(2)} $</span>
+            <button
+                onClick={() => funcionBorrar(producto.id)}
+                className="boton-borrar"
+            >
+                X
+            </button>
+            </div>
+        ))}
+        </div>
+    )}
 
     {total > 0 && (
-        <div
-        style={{
-            textAlign: "center",
-            marginTop: "1rem",
-            color: "#dfec23",
-            fontFamily: "Bangers",
-            fontSize: "1.5rem",
-        }}
-        >
-        Total a pagar: ${total}
+        <div className="carrito-total">
+        Total a pagar: ${total.toFixed(2)}
         </div>
     )}
     </div>
-)
+);
 }
-
 

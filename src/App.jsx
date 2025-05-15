@@ -10,10 +10,15 @@ import Contacto from './components/Contacto'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Swal from 'sweetalert2'
+import Admin from './components/Admin';
+import ProductoDetalle from './components/ProductoDetalle';
+
+
 
 
 function App() {
   const [productosCarrito, setProductosCarrito] = useState([])
+  const [isAdmin, setIsAdmin] = useState(true);
 
   function funcionCarrito(producto) {
     const existe = productosCarrito.find(p => p.id === producto.id)
@@ -78,7 +83,9 @@ function reducirCantidad(id) {
   return (
     <div>
       <Header/>
-      <Nav />
+      
+      <Nav isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
+
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -90,6 +97,9 @@ function reducirCantidad(id) {
         reducirCantidad={reducirCantidad} />} />
         <Route path="/about" element={<About />} />
         <Route path="/contacto" element={<Contacto />} />
+        <Route path="/productos/:id" element={<ProductoDetalle functionCarrito={funcionCarrito}/>} />
+        <Route path="/admin" element={<Admin isAdmin={isAdmin} />} /> {/* 🔐 */}
+
       </Routes>
 
       <Footer/>

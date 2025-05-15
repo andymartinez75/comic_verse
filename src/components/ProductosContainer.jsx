@@ -9,7 +9,7 @@ function ProductosContainer({functionCarrito}){
     const [error, setError] = useState(null);
     
 
-    {useEffect(() => {
+    useEffect(() => {
         fetch('https://6817f7ec5a4b07b9d1cda7c7.mockapi.io/productos')
             .then((respuesta) =>
                 respuesta.json()
@@ -24,7 +24,7 @@ function ProductosContainer({functionCarrito}){
                 setError('Hubo un problema al cargar los productos.');
                 setCargando(false);
             });
-    }, []);}
+    }, []);
 
     function functionEnProductos(producto){
         functionCarrito(producto)

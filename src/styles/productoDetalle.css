@@ -10,6 +10,7 @@ border-radius: 10px;
 box-shadow: 0 0 15px rgba(223, 236, 35, 0.3);
 }
 .detalle-producto h1 {
+font-family: 'Bangers', cursive;
 font-size: 2rem;
 color: #dfec23;
 margin-bottom: 1rem;
@@ -22,10 +23,9 @@ margin-bottom: 1rem;
 }
 .detalle-producto img {
 width: 100%;
-max-width: 300px;
-height: auto;
-border-radius: 10px;
-margin-bottom: 1rem;
+height: 100px;
+border-radius: 50%;
+margin-bottom: 0.5rem;
 object-fit: cover;
 }
 .controles-detalle {

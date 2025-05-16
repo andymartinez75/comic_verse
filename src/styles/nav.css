@@ -23,6 +23,8 @@
     margin: 0;
     padding: 0;
     flex-wrap: wrap;
+    
+
 }
 .nav li {
     margin: 0 1rem;
@@ -47,6 +49,7 @@
     align-items: center;
     width: 100%;
     padding-top: 1rem;
+    
     }
 
     .nav ul.abierto {

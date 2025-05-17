@@ -34,9 +34,9 @@
 
 .carrito-image{
     width: 100%;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
+    height: 200px;
+    object-fit:contain;
+    background-color:#0f3460;
     margin-bottom: 0.5rem;
 }
 .carrito-titulo {

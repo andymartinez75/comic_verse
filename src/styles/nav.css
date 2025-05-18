@@ -37,6 +37,11 @@
 .nav a:hover {
     color: #dfec23;
 }
+.carrito-icono {
+position: relative;
+display: inline-block;
+color: white;
+}
 /* Estilos para móvil */
 @media (max-width: 768px) {
     .menu-toggle {

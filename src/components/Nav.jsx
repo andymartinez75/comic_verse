@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/nav.css';
+import { FaShoppingCart } from 'react-icons/fa';
 
 const Nav = ({ isAdmin, setIsAdmin }) => {
 const [menuAbierto, setMenuAbierto] = useState(false);
@@ -24,7 +25,7 @@ return (
             <li><Link to="/about" onClick={cerrarMenu}>Acerca de</Link></li>
             <li><Link to="/contacto" onClick={cerrarMenu}>Contacto</Link></li>
             <li><Link to="/productos" onClick={cerrarMenu}>Cómics</Link></li>
-            <li><Link to="/carrito" onClick={cerrarMenu}>Carrito</Link></li>
+            <li><Link to="/carrito"className="carrito-icono" onClick={cerrarMenu}><FaShoppingCart /></Link></li>
             {isAdmin && (
             <li><Link to="/admin" onClick={cerrarMenu}>Admin</Link></li>
             )}

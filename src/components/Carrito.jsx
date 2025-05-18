@@ -20,7 +20,7 @@ return (
     ) : (
         <div className="carrito-tabla">
         <div className="carrito-fila encabezado">
-            <span>Producto</span>
+            <span >Producto</span>
             <span>Descripción</span>
             <span>Imagen</span>
             <span>Cantidad</span>
@@ -31,7 +31,7 @@ return (
 
         {productosCarrito.map((producto) => (
             <div key={producto.id} className="carrito-fila">
-            <strong>{producto.name}</strong>
+            <span className="carrito-nombre">{producto.name}</span>
             <span>{producto.description}</span>
             <img
                 src={producto.imagen}

@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../styles/productoDetalle.css";
+import { useNavigate } from 'react-router-dom';
+
 
 function ProductoDetalle({ functionCarrito }) {
+const navigate = useNavigate();
+
 const { id } = useParams();
 const [producto, setProducto] = useState(null);
 const [cantidad, setCantidad] = useState(1);
@@ -78,6 +82,13 @@ return (
         </div>
 
         <button onClick={agregarAlCarrito}>Agregar al carrito</button>
+        <button
+    onClick={() => navigate('/productos')}
+    className="boton-volver"
+>
+    🛍️ Volver a la tienda
+</button>
+
     </div>
     </div>
 );

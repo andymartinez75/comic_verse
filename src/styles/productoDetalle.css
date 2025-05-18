@@ -56,6 +56,24 @@ font-size: 1.2rem;
 margin: 0 10px;
 color: #dfec23;
 }
+.boton-volver {
+margin-top: 1rem;
+background-color: #dfec23;
+border: none;
+padding: 0.5rem 1.2rem;
+color: #0f3460;
+cursor: pointer;
+border-radius: 8px;
+font-family: 'Bangers', cursive;
+font-size: 1.2rem;
+transition: background-color 0.3s ease;
+}
+
+.boton-volver:hover {
+background-color: #07ad52;
+color: white;
+}
+
 @media (max-width: 480px) {
 .controles-detalle {
     flex-direction: column;

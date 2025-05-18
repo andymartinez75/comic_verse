@@ -1,5 +1,7 @@
 import "../styles/Carrito.css"
 import CarritoCard from "./CarritoCard.jsx"
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Carrito({
     productosCarrito,
@@ -7,6 +9,8 @@ export default function Carrito({
     aumentarCantidad,
     reducirCantidad
 }) {
+    const navigate = useNavigate();
+
     const total = productosCarrito.reduce(
     (subTotal, producto) => subTotal + producto.price * producto.cantidad,
     0
@@ -57,11 +61,18 @@ return (
     )}
 
     {total > 0 && (
-        <div className="carrito-total">
-        Total a pagar: ${total.toFixed(2)}
-        </div>
-    )}
+    <>
+    <div className="carrito-total">
+    Total a pagar: ${total.toFixed(2)}
     </div>
-);
+    <div style={{ textAlign: "center", marginTop: "1rem" }}>
+    <button onClick={() => navigate('/productos')} className="boton-volver">
+        🛍️ Seguir comprando
+    </button>
+    </div>
+</>
+)}
+    </div>
+    );
 }
 

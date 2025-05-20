@@ -84,7 +84,7 @@ function reducirCantidad(id) {
     <div>
       <Header/>
       
-      <Nav isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
+      <Nav isAdmin={isAdmin} setIsAdmin={setIsAdmin} productosCarrito={productosCarrito}/>
 
 
       <Routes>

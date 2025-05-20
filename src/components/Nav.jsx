@@ -3,8 +3,9 @@ import { NavLink } from 'react-router-dom';
 import '../styles/nav.css';
 import { FaShoppingCart } from 'react-icons/fa';
 
-const Nav = ({ isAdmin, setIsAdmin }) => {
+const Nav = ({ isAdmin, setIsAdmin, productosCarrito}) => {
 const [menuAbierto, setMenuAbierto] = useState(false);
+
 
 const toggleMenu = () => setMenuAbierto(!menuAbierto);
 const cerrarMenu = () => setMenuAbierto(false);
@@ -25,7 +26,10 @@ return (
             <li><NavLink to="/about" onClick={cerrarMenu}>Acerca de</NavLink></li>
             <li><NavLink to="/contacto" onClick={cerrarMenu}>Contacto</NavLink></li>
             <li><NavLink to="/productos" onClick={cerrarMenu}>Cómics</NavLink></li>
-            <li><NavLink to="/carrito"className="carrito-icono" onClick={cerrarMenu}><FaShoppingCart /></NavLink></li>
+            <li><NavLink to="/carrito"className="carrito-icono" onClick={cerrarMenu}><FaShoppingCart />
+            {productosCarrito.length > 0 && (
+            <span className="carrito-contador">{productosCarrito.length}</span>
+            )}</NavLink></li>
             {isAdmin && (
             <li><NavLink to="/admin" onClick={cerrarMenu}>Admin</NavLink></li>
             )}

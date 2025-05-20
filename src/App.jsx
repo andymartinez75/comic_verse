@@ -20,22 +20,42 @@ function App() {
 
   const loginUser = () => {
     setIsUserLoggedIn(true);
-    Swal.fire('¡Usuario logueado!', '', 'success');
+    Swal.fire({
+    title: '¡Usuario logueado!',
+    icon: 'success',
+    background: '#0f3460',
+    color: '#dfec23'
+  });
   };
 
   const logoutUser = () => {
     setIsUserLoggedIn(false);
-    Swal.fire('Sesión cerrada', '', 'info');
+    Swal.fire({
+      title:'Sesión cerrada',
+      icon: 'info',
+      background: "#0f3460",
+      color: "#dfec23"
+  });
   };
 
   const loginAdmin = () => {
     setIsAdmin(true);
-    Swal.fire('¡Admin logueado!', '', 'success');
+    Swal.fire({
+      title:'¡Admin logueado!',
+      icon:'success',
+      background: "#0f3460",
+      color: "#dfec23"
+  });
   };
 
   const logoutAdmin = () => {
     setIsAdmin(false);
-    Swal.fire('Admin deslogueado', '', 'info');
+    Swal.fire({
+      title:'Admin deslogueado',
+      icon: 'info',
+      background: "#0f3460",
+      color: "#dfec23"
+  });
   };
 
   const funcionCarrito = (producto) => {

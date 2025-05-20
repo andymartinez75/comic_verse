@@ -69,4 +69,21 @@ color: white;
     color: #dfec23; 
     border-bottom: 2px solid #dfec23; 
 }
+.boton-login {
+    background-color: #dfec23;
+    color: #0f3460;
+    font-family: 'Bangers';
+    border: none;
+    padding: 0.4rem 1rem;
+    margin-left: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.boton-login:hover {
+    background-color: #f5f94d;
+    color: #0f3460;
+}
 

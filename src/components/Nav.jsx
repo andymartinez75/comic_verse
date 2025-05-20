@@ -1,58 +1,63 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import '../styles/nav.css';
 import { FaShoppingCart } from 'react-icons/fa';
+import '../styles/nav.css';
 
-const Nav = ({ isAdmin, setIsAdmin, productosCarrito}) => {
-const [menuAbierto, setMenuAbierto] = useState(false);
+const Nav = ({
+    isAdmin,
+    isUserLoggedIn,
+    loginUser,
+    logoutUser,
+    loginAdmin,
+    logoutAdmin,
+    productosCarrito
+}) => {
+    const [menuAbierto, setMenuAbierto] = useState(false);
 
+    const toggleMenu = () => setMenuAbierto(!menuAbierto);
+    const cerrarMenu = () => setMenuAbierto(false);
 
-const toggleMenu = () => setMenuAbierto(!menuAbierto);
-const cerrarMenu = () => setMenuAbierto(false);
-
-const toggleAdmin = () => {
-    setIsAdmin(!isAdmin);
-    cerrarMenu();
-};
+    const cantidadProductos = productosCarrito.length;
 
 return (
-
     <nav className="nav">
-        <div className="nav-top">
+    <div className="nav-top">
         <button className="menu-toggle" onClick={toggleMenu}>☰</button>
-        </div>
-        <ul className={`nav-links ${menuAbierto ? 'abierto' : ''}`}>
-            <li><NavLink to="/" onClick={cerrarMenu}>Inicio</NavLink></li>
-            <li><NavLink to="/about" onClick={cerrarMenu}>Acerca de</NavLink></li>
-            <li><NavLink to="/contacto" onClick={cerrarMenu}>Contacto</NavLink></li>
-            <li><NavLink to="/productos" onClick={cerrarMenu}>Cómics</NavLink></li>
-            <li><NavLink to="/carrito"className="carrito-icono" onClick={cerrarMenu}><FaShoppingCart />
-            {productosCarrito.length > 0 && (
-            <span className="carrito-contador">{productosCarrito.length}</span>
-            )}</NavLink></li>
-            {isAdmin && (
-            <li><NavLink to="/admin" onClick={cerrarMenu}>Admin</NavLink></li>
+    </div>
+    <ul className={`nav-links ${menuAbierto ? 'abierto' : ''}`}>
+        <li><NavLink to="/" onClick={cerrarMenu}>Inicio</NavLink></li>
+        <li><NavLink to="/about" onClick={cerrarMenu}>Acerca de</NavLink></li>
+        <li><NavLink to="/contacto" onClick={cerrarMenu}>Contacto</NavLink></li>
+        <li><NavLink to="/productos" onClick={cerrarMenu}>Cómics</NavLink></li>
+        <li>
+        <NavLink to="/carrito" className="carrito-icono" onClick={cerrarMenu}>
+            <FaShoppingCart />
+            {cantidadProductos > 0 && (
+            <span className="carrito-contador">{cantidadProductos}</span>
             )}
-            <li>
-            <button
-                onClick={toggleAdmin}
-                style={{
-                background: '#dfec23',
-                color: '#0f3460',
-                fontFamily: 'Bangers',
-                border: 'none',
-                padding: '0.2rem 1rem',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                }}
-            >
-                {isAdmin ? 'Salir Admin' : 'Login Admin'}
-            </button>
-            </li>
-        </ul>
-        </nav>
-    );
+        </NavLink>
+        </li>
+        {isAdmin && (
+        <li><NavLink to="/admin" onClick={cerrarMenu}>Admin</NavLink></li>
+        )}
+        <li>
+        {!isUserLoggedIn ? (
+            <button onClick={loginUser} className="boton-login">Login Usuario</button>
+        ) : (
+            <button onClick={logoutUser} className="boton-login">Logout Usuario</button>
+        )}
+        </li>
+        <li>
+        {!isAdmin ? (
+            <button onClick={loginAdmin} className="boton-login">Login Admin</button>
+        ) : (
+            <button onClick={logoutAdmin} className="boton-login" >Salir Admin</button>
+        )}
+        </li>
+    </ul>
+    </nav>
+);
 };
 
 export default Nav;
+

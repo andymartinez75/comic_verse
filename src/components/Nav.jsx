@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import '../styles/nav.css';
 import { FaShoppingCart } from 'react-icons/fa';
 
@@ -21,13 +21,13 @@ return (
         <button className="menu-toggle" onClick={toggleMenu}>☰</button>
         </div>
         <ul className={`nav-links ${menuAbierto ? 'abierto' : ''}`}>
-            <li><Link to="/" onClick={cerrarMenu}>Inicio</Link></li>
-            <li><Link to="/about" onClick={cerrarMenu}>Acerca de</Link></li>
-            <li><Link to="/contacto" onClick={cerrarMenu}>Contacto</Link></li>
-            <li><Link to="/productos" onClick={cerrarMenu}>Cómics</Link></li>
-            <li><Link to="/carrito"className="carrito-icono" onClick={cerrarMenu}><FaShoppingCart /></Link></li>
+            <li><NavLink to="/" onClick={cerrarMenu}>Inicio</NavLink></li>
+            <li><NavLink to="/about" onClick={cerrarMenu}>Acerca de</NavLink></li>
+            <li><NavLink to="/contacto" onClick={cerrarMenu}>Contacto</NavLink></li>
+            <li><NavLink to="/productos" onClick={cerrarMenu}>Cómics</NavLink></li>
+            <li><NavLink to="/carrito"className="carrito-icono" onClick={cerrarMenu}><FaShoppingCart /></NavLink></li>
             {isAdmin && (
-            <li><Link to="/admin" onClick={cerrarMenu}>Admin</Link></li>
+            <li><NavLink to="/admin" onClick={cerrarMenu}>Admin</NavLink></li>
             )}
             <li>
             <button

@@ -65,3 +65,8 @@ color: white;
     margin: 0.5 0;
     }
 }
+.nav a.active {
+    color: #dfec23; 
+    border-bottom: 2px solid #dfec23; 
+}
+

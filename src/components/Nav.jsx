@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import '../styles/nav.css';
+import { useAuthContext } from '../context/AuthContext';
 
-const Nav = ({
-    isAdmin,
-    isUserLoggedIn,
-    loginUser,
-    logoutUser,
-    loginAdmin,
-    logoutAdmin,
-    productosCarrito
-}) => {
+const Nav = ({ productosCarrito }) => {
     const [menuAbierto, setMenuAbierto] = useState(false);
+    const { user, login, logout } = useAuthContext();
 
     const toggleMenu = () => setMenuAbierto(!menuAbierto);
     const cerrarMenu = () => setMenuAbierto(false);
 
     const cantidadProductos = productosCarrito.length;
+    const handleLogin = () => {
+    
+    const email = prompt('Ingrese usuario (ej: admin para admin):');
+    const pass = prompt('Ingrese contraseña (para admin: 1234):');
+    login(email, pass);
+};
 
     return (
         <nav className="nav">
@@ -37,22 +37,19 @@ const Nav = ({
                         )}
                     </NavLink>
                 </li>
-                {isAdmin && (
-                    <li><NavLink to="/admin" onClick={cerrarMenu}>Admin</NavLink></li>
-                )}
-                <li>
-                    {!isUserLoggedIn ? (
-                        <button onClick={loginUser} className="boton-login">Login Usuario</button>
-                    ) : (
-                        <button onClick={logoutUser} className="boton-login">Logout Usuario</button>
-                    )}
-                </li>
-                <li>
-                    {!isAdmin ? (
-                        <button onClick={loginAdmin} className="boton-login">Login Admin</button>
-                    ) : (
-                        <button onClick={logoutAdmin} className="boton-login">Salir Admin</button>
-                    )}
+                {user?.isAdmin && (
+            <li><NavLink to="/admin" onClick={cerrarMenu}>Admin</NavLink></li>
+        )}
+        <li>
+            {!user ? (
+            <button onClick={handleLogin} className="boton-login">Login</button>
+        ) : (
+            <button onClick={() => { logout(); cerrarMenu(); }} className="boton-login">
+            Cerrar sesión
+            </button>
+        )}
+            
+                    
                 </li>
             </ul>
         </nav>

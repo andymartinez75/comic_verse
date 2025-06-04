@@ -1,29 +1,36 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../auth/firebase"; 
+import React, { createContext, useContext, useState } from 'react';
+
 
 const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
-
 export const AuthProvider = ({ children }) => {
-    const [usuario, setUsuario] = useState(null);
-    const [cargando, setCargando] = useState(true);
+const [user, setUser] = useState(null);
 
-    useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setUsuario(user);
-        setCargando(false);
-    });
+const login = (email, password) => {
+    // Simulación simple
+    if(email === 'admin' && password === '1234'){
+        setUser({ email, isAdmin: true });
+    } else if(email && password){
+        setUser({ email, isAdmin: false });
+    }
+};
 
-    return () => unsubscribe(); // Limpiar suscripción
-}, []);
+    const logout = () => {
+    setUser(null);
+};
 
-const cerrarSesion = () => signOut(auth);
+    const registrarUsuario = (email,/* password*/) => {
+    // ver
+    setUser({ email, isAdmin: false });
+    };
 
     return (
-    <AuthContext.Provider value={{ usuario, cerrarSesion }}>
-        {!cargando && children}
+    <AuthContext.Provider value={{ user, login, logout, registrarUsuario }}>
+    {children}
     </AuthContext.Provider>
-);
+    );
 };
+
+export const useAuthContext = () => useContext(AuthContext);
+
+

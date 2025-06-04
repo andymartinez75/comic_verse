@@ -1,9 +1,9 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Navigate } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
 
 const RutaPrivada = ({ children }) => {
-    const { usuario } = useAuth();
-    return usuario ? children : <Navigate to="/" />;
+    const { user } = useAuthContext();
+    return user ? children : <Navigate to="/login" />;
 };
 
 export default RutaPrivada;

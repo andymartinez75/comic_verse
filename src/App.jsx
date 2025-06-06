@@ -17,8 +17,9 @@ import Registro from './components/Registro';
 import { useAuthContext } from './context/AuthContext';
 
 
+
 function App() {
-  const { usuario, cerrarSesion } = useAuthContext(); 
+  const { user, logout } = useAuthContext(); 
   const [productosCarrito, setProductosCarrito] = useState([]);
 
   const funcionCarrito = (producto) => {
@@ -58,8 +59,8 @@ function App() {
     <div>
       <Header />
       <Nav
-        usuario={usuario}
-        cerrarSesion={cerrarSesion}
+        usuario={user}
+        cerrarSesion={logout}
         productosCarrito={productosCarrito}
       />
 
@@ -84,7 +85,7 @@ function App() {
           path="/admin"
           element={
             <RutaPrivada>
-              <Admin />
+              <Admin isAdmin={user?.isAdmin}/>
             </RutaPrivada>
           }
         />

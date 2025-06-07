@@ -1,323 +1,172 @@
-// src/components/Admin.jsx
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
-import Swal from "sweetalert2";
+import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import "../styles/admin.css";
 
-function Admin() {
-  const { user } = useAuthContext();
-  const navigate = useNavigate();
+const API_URL = 'https://6817f7ec5a4b07b9d1cda7c7.mockapi.io/productos';
+
+const Admin = () => {
   const [productos, setProductos] = useState([]);
-
-  // Estado para crear o editar un producto: name, price, imagen (URL), description
   const [nuevoProducto, setNuevoProducto] = useState({
-    name: "",
-    price: "",
-    imagen: "",
-    description: ""
+    name: '',
+    price: '',
+    imagen: '',
+    description: ''
   });
 
   useEffect(() => {
-    // Si no hay usuario o no es admin, redirijo al home
-    if (!user || !user.isAdmin) {
-      navigate("/");
-    } else {
-      // Si es admin, cargo la lista de productos
-      cargarProductos();
-    }
-  }, [user, navigate]);
+    fetchProductos();
+  }, []);
 
-  // Función para traer todos los productos desde MockAPI
-  const cargarProductos = async () => {
+  const fetchProductos = async () => {
     try {
-      const res = await fetch("https://6817f7ec5a4b07b9d1cda7c7.mockapi.io/productos");
+      const res = await fetch(API_URL);
       const data = await res.json();
       setProductos(data);
-    } catch (err) {
-      console.error("Error al obtener productos:", err);
+    } catch (error) {
+      console.error('Error al obtener productos:', error);
     }
   };
 
-  // Maneja cambios en los inputs de 'nuevoProducto'
-  const manejarCambio = (e) => {
-    setNuevoProducto({
-      ...nuevoProducto,
-      [e.target.name]: e.target.value
-    });
+  const handleChange = (e) => {
+    setNuevoProducto({ ...nuevoProducto, [e.target.name]: e.target.value });
   };
 
-  // Crear un producto nuevo
   const crearProducto = async () => {
-    const { name, price, imagen, description } = nuevoProducto;
-
-    // Validar que todos los campos estén completos
-    if (!name || !price || !imagen || !description) {
-      Swal.fire("Faltan datos", "Completá todos los campos antes de crear.", "warning");
+    if (!nuevoProducto.name || !nuevoProducto.price || !nuevoProducto.imagen || !nuevoProducto.description) {
+      Swal.fire('Campos incompletos', 'Por favor completa todos los campos.', 'warning');
       return;
     }
 
     try {
-      const res = await fetch("https://6817f7ec5a4b07b9d1cda7c7.mockapi.io/productos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, price, imagen, description })
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nuevoProducto)
       });
-
-      if (!res.ok) throw new Error("Error en POST");
-
-      // Mostrar notificación y recargar listado
-      Swal.fire("¡Creado!", "El cómic se creó correctamente.", "success");
-      setNuevoProducto({ name: "", price: "", imagen: "", description: "" });
-      cargarProductos();
-    } catch (err) {
-      console.error("Error al crear producto:", err);
-      Swal.fire("Error", "No se pudo crear el cómic.", "error");
+      if (res.ok) {
+        setNuevoProducto({ name: '', price: '', imagen: '', description: '' });
+        fetchProductos();
+        Swal.fire('Producto creado', '', 'success');
+      }
+    } catch (error) {
+      console.error('Error al crear producto:', error);
     }
   };
 
-  // Eliminar producto por ID
   const eliminarProducto = async (id) => {
-    const confirmar = await Swal.fire({
-      title: "¿Estás seguro?",
-      text: "No podrás revertir esto.",
-      icon: "warning",
+    const confirm = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará el producto',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar"
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
     });
 
-    if (confirmar.isConfirmed) {
+    if (confirm.isConfirmed) {
       try {
-        const res = await fetch(`https://6817f7ec5a4b07b9d1cda7c7.mockapi.io/productos/${id}`, {
-          method: "DELETE"
-        });
-        if (!res.ok) throw new Error("Error en DELETE");
-
-        Swal.fire("¡Eliminado!", "El cómic se eliminó correctamente.", "success");
-        cargarProductos();
-      } catch (err) {
-        console.error("Error al eliminar producto:", err);
-        Swal.fire("Error", "No se pudo eliminar el cómic.", "error");
+        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        fetchProductos();
+        Swal.fire('Producto eliminado', '', 'success');
+      } catch (error) {
+        console.error('Error al eliminar:', error);
       }
     }
   };
 
-  // Editar un producto existente (pide nuevos valores mediante prompt)
-  const editarProducto = async (id, current) => {
-    // current = { name, price, imagen, description }
-    const newName = prompt("Nuevo título:", current.name);
-    if (newName === null) return; // Si cancela, salgo
+  const editarProducto = async (producto) => {
+    const { value: formValues } = await Swal.fire({
+      title: 'Editar producto',
+      html: `
+        <input id="swal-name" class="swal2-input" placeholder="Nombre" value="${producto.name}">
+        <input id="swal-price" class="swal2-input" placeholder="Precio" value="${producto.price}">
+        <input id="swal-imagen" class="swal2-input" placeholder="URL Imagen" value="${producto.imagen}">
+        <textarea id="swal-description" class="swal2-textarea" placeholder="Descripción">${producto.description}</textarea>
+      `,
+      focusConfirm: false,
+      preConfirm: () => {
+        return {
+          name: document.getElementById('swal-name').value,
+          price: document.getElementById('swal-price').value,
+          imagen: document.getElementById('swal-imagen').value,
+          description: document.getElementById('swal-description').value
+        };
+      },
+      confirmButtonText: 'Guardar cambios',
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar'
+    });
 
-    const newPrice = prompt("Nuevo precio:", current.price);
-    if (newPrice === null) return;
-
-    const newImagen = prompt("Nueva URL de imagen:", current.imagen);
-    if (newImagen === null) return;
-
-    const newDescription = prompt("Nueva descripción:", current.description);
-    if (newDescription === null) return;
-
-    try {
-      const res = await fetch(`https://6817f7ec5a4b07b9d1cda7c7.mockapi.io/productos/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: newName,
-          price: newPrice,
-          imagen: newImagen,
-          description: newDescription
-        })
-      });
-
-      if (!res.ok) throw new Error("Error en PUT");
-      Swal.fire("¡Actualizado!", "El cómic se modificó correctamente.", "success");
-      cargarProductos();
-    } catch (err) {
-      console.error("Error al editar producto:", err);
-      Swal.fire("Error", "No se pudo actualizar el cómic.", "error");
+    if (formValues) {
+      try {
+        await fetch(`${API_URL}/${producto.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formValues)
+        });
+        fetchProductos();
+        Swal.fire('Producto actualizado', '', 'success');
+      } catch (error) {
+        console.error('Error al editar producto:', error);
+      }
     }
   };
 
   return (
-    <div
-      style={{
-        color: "#dfec23",
-        backgroundColor: "#0f3460",
-        fontFamily: "Bangers",
-        padding: "2rem",
-        textAlign: "center"
-      }}
-    >
-      <h1>⚡ Panel de Administrador</h1>
+    <div className="admin-container">
+      <h2 className="admin-title">Panel de Administración</h2>
 
-      {/* ===== Formulario para crear un cómic nuevo ===== */}
-      <div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+      <div className="formulario-crear">
         <input
+          type="text"
           name="name"
-          placeholder="Título del cómic"
+          placeholder="Nombre"
           value={nuevoProducto.name}
-          onChange={manejarCambio}
-          style={{
-            marginRight: "8px",
-            padding: "8px",
-            borderRadius: "6px",
-            border: "1px solid #dfec23",
-            width: "20%"
-          }}
+          onChange={handleChange}
         />
         <input
+          type="text"
           name="price"
           placeholder="Precio"
           value={nuevoProducto.price}
-          onChange={manejarCambio}
-          style={{
-            marginRight: "8px",
-            padding: "8px",
-            borderRadius: "6px",
-            border: "1px solid #dfec23",
-            width: "10%"
-          }}
+          onChange={handleChange}
         />
         <input
+          type="text"
           name="imagen"
-          placeholder="URL de imagen"
+          placeholder="URL de la imagen"
           value={nuevoProducto.imagen}
-          onChange={manejarCambio}
-          style={{
-            marginRight: "8px",
-            padding: "8px",
-            borderRadius: "6px",
-            border: "1px solid #dfec23",
-            width: "30%"
-          }}
+          onChange={handleChange}
         />
         <input
+          type="text"
           name="description"
           placeholder="Descripción"
           value={nuevoProducto.description}
-          onChange={manejarCambio}
-          style={{
-            marginRight: "8px",
-            padding: "8px",
-            borderRadius: "6px",
-            border: "1px solid #dfec23",
-            width: "25%"
-          }}
+          onChange={handleChange}
         />
-        <button
-          onClick={crearProducto}
-          style={{
-            backgroundColor: "#ffffff",
-            color: "#0f3460",
-            borderRadius: "8px",
-            padding: "8px 12px",
-            fontWeight: "bold"
-          }}
-        >
-          + Agregar
-        </button>
+        <button className="btn-crear" onClick={crearProducto}>Crear producto</button>
       </div>
 
-      {/* ===== Lista de productos con imagen, nombre, precio y descripción ===== */}
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {productos.map((p) => (
-          <li
-            key={p.id}
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              backgroundColor: "#1a1a2e",
-              border: "1px solid #dfec23",
-              margin: "0.5rem 0",
-              padding: "1rem",
-              borderRadius: "8px",
-              color: "white"
-            }}
-          >
-            {/* === Miniatura de la imagen === */}
-            <div style={{ flex: "0 0 80px" }}>
-              {p.imagen ? (
-                <img
-                  src={p.imagen}
-                  alt={p.name}
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "cover",
-                    borderRadius: "4px",
-                    border: "1px solid #dfec23"
-                  }}
-                />
-              ) : (
-                <div
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    backgroundColor: "#333",
-                    color: "#dfec23",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "0.8rem",
-                    borderRadius: "4px"
-                  }}
-                >
-                  Sin imagen
-                </div>
-              )}
+      <div className="productos-grid">
+        {productos.map((prod) => (
+          <div className="card-admin" key={prod.id}>
+            <img src={prod.imagen} alt={prod.name} />
+            <h3>{prod.name}</h3>
+            <p><strong>Precio:</strong> ${prod.price}</p>
+            <p>{prod.description}</p>
+            <div className="acciones">
+              <button className="btn-editar" onClick={() => editarProducto(prod)}>Editar</button>
+              <button className="btn-eliminar" onClick={() => eliminarProducto(prod.id)}>Eliminar</button>
             </div>
-
-            {/* === Título, precio y descripción === */}
-            <div style={{ flex: "1", textAlign: "left", marginLeft: "1rem" }}>
-              <strong style={{ fontSize: "1.1rem" }}>{p.name}</strong>
-              <p style={{ margin: "0.2rem 0" }}>💲{p.price}</p>
-              <p style={{ fontSize: "0.9rem", color: "#ccc", margin: "0.2rem 0" }}>
-                {p.description}
-              </p>
-            </div>
-
-            {/* === Botones de acción (Editar / Eliminar) === */}
-            <div style={{ flex: "0 0 160px", textAlign: "right" }}>
-              <button
-                onClick={() =>
-                  editarProducto(p.id, {
-                    name: p.name,
-                    price: p.price,
-                    imagen: p.imagen,
-                    description: p.description
-                  })
-                }
-                style={{
-                  marginRight: "10px",
-                  backgroundColor: "#ffffff",
-                  color: "#0f3460",
-                  borderRadius: "6px",
-                  padding: "6px 10px",
-                  fontWeight: "bold"
-                }}
-              >
-                ✏️ Editar
-              </button>
-              <button
-                onClick={() => eliminarProducto(p.id)}
-                style={{
-                  backgroundColor: "#ffffff",
-                  color: "#0f3460",
-                  borderRadius: "6px",
-                  padding: "6px 10px",
-                  fontWeight: "bold"
-                }}
-              >
-                🗑️ Eliminar
-              </button>
-            </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
-}
+};
 
 export default Admin;
+
 
 

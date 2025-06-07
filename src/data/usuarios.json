@@ -1,11 +1,11 @@
 [
     {
-    "email": "admin@comicverse.com",
+    "email": "admin@comicverse",
     "password": "admin123",
     "isAdmin": true
     },
     {
-    "email": "usuario@comicverse.com",
+    "email": "usuario@comicverse",
     "password": "usuario123",
     "isAdmin": false
     }

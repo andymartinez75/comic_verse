@@ -12,6 +12,8 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const success = login(email, password);
+    
+    
 
     if (success) {
       navigate(email === 'admin' ? '/admin' : '/');

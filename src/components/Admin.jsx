@@ -37,6 +37,25 @@ const Admin = () => {
       return;
     }
 
+    if (!nuevoProducto.name.trim() || nuevoProducto.name.length < 3) {
+  Swal.fire('Nombre inválido', 'El nombre debe tener al menos 3 caracteres.', 'warning');
+  return;
+}
+if (isNaN(nuevoProducto.price) || Number(nuevoProducto.price) <= 0) {
+  Swal.fire('Precio inválido', 'El precio debe ser un número mayor a 0.', 'warning');
+  return;
+}
+const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
+if (!urlRegex.test(nuevoProducto.imagen)) {
+  Swal.fire('URL de imagen inválida', 'Debe ser una URL válida que termine en .jpg, .png, etc.', 'warning');
+  return;
+}
+if (!nuevoProducto.description.trim() || nuevoProducto.description.length < 10) {
+  Swal.fire('Descripción inválida', 'La descripción debe tener al menos 10 caracteres.', 'warning');
+  return;
+}
+
+
     try {
       const res = await fetch(API_URL, {
         method: 'POST',
@@ -98,6 +117,25 @@ const Admin = () => {
     });
 
     if (formValues) {
+      // Validaciones
+  if (!formValues.name.trim() || formValues.name.length < 3) {
+    Swal.fire('Nombre inválido', 'Debe tener al menos 3 caracteres.', 'warning');
+    return;
+  }
+  if (isNaN(formValues.price) || Number(formValues.price) <= 0) {
+    Swal.fire('Precio inválido', 'Debe ser un número mayor a 0.', 'warning');
+    return;
+  }
+  const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
+  if (!urlRegex.test(formValues.imagen)) {
+    Swal.fire('Imagen inválida', 'Debe ser una URL válida de imagen.', 'warning');
+    return;
+  }
+  if (!formValues.description.trim() || formValues.description.length < 10) {
+    Swal.fire('Descripción inválida', 'Debe tener al menos 10 caracteres.', 'warning');
+    return;
+  }
+
       try {
         await fetch(`${API_URL}/${producto.id}`, {
           method: 'PUT',

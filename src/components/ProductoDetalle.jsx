@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../styles/productoDetalle.css";
 import { useNavigate } from 'react-router-dom';
+import { FaShoppingCart } from "react-icons/fa";
+
 
 
 function ProductoDetalle({ functionCarrito }) {
@@ -88,9 +90,12 @@ return (
 >
     🛍️ Volver a la tienda
 </button>
-
+<button onClick={() => navigate('/carrito')} className="boton-volver">
+        <FaShoppingCart style={{ marginRight: "6px" }} />
+        Ir al carrito
+    </button>
     </div>
-    </div>
+</div>
 );
 }
 

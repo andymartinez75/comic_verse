@@ -138,3 +138,20 @@
     height: 150px;
   }
 }
+.input-busqueda {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  width: 200px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s ease;
+  margin: 10px auto;
+  display: block;
+}
+
+.input-busqueda:focus {
+  box-shadow: 0 0 5px 2px #dfec23aa;
+  background-color: #111b3a;
+  color: #fff;
+}

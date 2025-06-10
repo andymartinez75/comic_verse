@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import "../styles/admin.css";
 
+
 const API_URL = 'https://6817f7ec5a4b07b9d1cda7c7.mockapi.io/productos';
 
 const Admin = () => {
@@ -38,22 +39,22 @@ const Admin = () => {
     }
 
     if (!nuevoProducto.name.trim() || nuevoProducto.name.length < 3) {
-  Swal.fire('Nombre inválido', 'El nombre debe tener al menos 3 caracteres.', 'warning');
-  return;
-}
-if (isNaN(nuevoProducto.price) || Number(nuevoProducto.price) <= 0) {
-  Swal.fire('Precio inválido', 'El precio debe ser un número mayor a 0.', 'warning');
-  return;
-}
-const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
-if (!urlRegex.test(nuevoProducto.imagen)) {
-  Swal.fire('URL de imagen inválida', 'Debe ser una URL válida que termine en .jpg, .png, etc.', 'warning');
-  return;
-}
-if (!nuevoProducto.description.trim() || nuevoProducto.description.length < 10) {
-  Swal.fire('Descripción inválida', 'La descripción debe tener al menos 10 caracteres.', 'warning');
-  return;
-}
+    Swal.fire('Nombre inválido', 'El nombre debe tener al menos 3 caracteres.', 'warning');
+    return;
+    }
+    if (isNaN(nuevoProducto.price) || Number(nuevoProducto.price) <= 0) {
+    Swal.fire('Precio inválido', 'El precio debe ser un número mayor a 0.', 'warning');
+    return;
+    }
+    const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
+    if (!urlRegex.test(nuevoProducto.imagen)) {
+    Swal.fire('URL de imagen inválida', 'Debe ser una URL válida que termine en .jpg, .png, etc.', 'warning');
+    return;
+    }
+    if (!nuevoProducto.description.trim() || nuevoProducto.description.length < 10) {
+    Swal.fire('Descripción inválida', 'La descripción debe tener al menos 10 caracteres.', 'warning');
+    return;
+    }
 
 
     try {
@@ -118,23 +119,23 @@ if (!nuevoProducto.description.trim() || nuevoProducto.description.length < 10) 
 
     if (formValues) {
       // Validaciones
-  if (!formValues.name.trim() || formValues.name.length < 3) {
-    Swal.fire('Nombre inválido', 'Debe tener al menos 3 caracteres.', 'warning');
-    return;
-  }
-  if (isNaN(formValues.price) || Number(formValues.price) <= 0) {
-    Swal.fire('Precio inválido', 'Debe ser un número mayor a 0.', 'warning');
-    return;
-  }
-  const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
-  if (!urlRegex.test(formValues.imagen)) {
-    Swal.fire('Imagen inválida', 'Debe ser una URL válida de imagen.', 'warning');
-    return;
-  }
-  if (!formValues.description.trim() || formValues.description.length < 10) {
-    Swal.fire('Descripción inválida', 'Debe tener al menos 10 caracteres.', 'warning');
-    return;
-  }
+        if (!formValues.name.trim() || formValues.name.length < 3) {
+        Swal.fire('Nombre inválido', 'Debe tener al menos 3 caracteres.', 'warning');
+        return;
+        }
+        if (isNaN(formValues.price) || Number(formValues.price) <= 0) {
+        Swal.fire('Precio inválido', 'Debe ser un número mayor a 0.', 'warning');
+        return;
+        }
+        const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
+        if (!urlRegex.test(formValues.imagen)) {
+        Swal.fire('Imagen inválida', 'Debe ser una URL válida de imagen.', 'warning');
+        return;
+        }
+        if (!formValues.description.trim() || formValues.description.length < 10) {
+        Swal.fire('Descripción inválida', 'Debe tener al menos 10 caracteres.', 'warning');
+        return;
+        }
 
       try {
         await fetch(`${API_URL}/${producto.id}`, {
@@ -149,6 +150,11 @@ if (!nuevoProducto.description.trim() || nuevoProducto.description.length < 10) 
       }
     }
   };
+      const [busqueda, setBusqueda] = useState('');
+      
+      const productosFiltrados = productos.filter((prod) => 
+        prod.name.toLowerCase().includes(busqueda.toLowerCase())
+      );
 
   return (
     <div className="admin-container">
@@ -186,8 +192,18 @@ if (!nuevoProducto.description.trim() || nuevoProducto.description.length < 10) 
         <button className="btn-crear" onClick={crearProducto}>Crear producto</button>
       </div>
 
+      <div className="buscador">
+        <input
+        type="text"
+        placeholder="Buscar por nombre..."
+        value={busqueda}
+        onChange={(e) => setBusqueda(e.target.value)}
+        className="input-busqueda"
+        />
+      </div>
+      
       <div className="productos-grid">
-        {productos.map((prod) => (
+        {productosFiltrados.map((prod) => (
           <div className="card-admin" key={prod.id}>
             <img src={prod.imagen} alt={prod.name} />
             <h3>{prod.name}</h3>

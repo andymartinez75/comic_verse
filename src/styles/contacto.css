@@ -12,3 +12,50 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(223, 236, 35, 0.3);
 }
+.formulario-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.formulario-contacto label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formulario-contacto input,
+.formulario-contacto textarea {
+  padding: 0.8rem;
+  border: 2px solid #dfec23;
+  border-radius: 6px;
+  font-family: 'Comic Neue', cursive;
+  font-size: 1rem;
+  background-color: #1a1a2e;
+  color: #fff;
+  resize: vertical;
+}
+
+.formulario-contacto textarea {
+  min-height: 100px;
+}
+
+.formulario-contacto button {
+  padding: 0.8rem;
+  background-color: #dfec23;
+  color: #0f3460;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formulario-contacto button:hover {
+  background-color: #c1d118;
+}

@@ -8,13 +8,13 @@ function Contacto () {
     email: '',
     asunto: '',
     mensaje: '',
-  });
+});
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     setFormulario({ ...formulario, [e.target.name]: e.target.value });
-  };
+};
 
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
 
     
@@ -23,64 +23,64 @@ function Contacto () {
 
     // Reiniciar campos
     setFormulario({
-      nombre: '',
-      email: '',
-      asunto: '',
-      mensaje: '',
+    nombre: '',
+    email: '',
+    asunto: '',
+    mensaje: '',
     });
-  };
+};
 
-  return (
+return (
     <div className='contacto'>
-      <h1>Contacto</h1>
-      <form onSubmit={handleSubmit} className="formulario-contacto">
+    <h1>Contacto</h1>
+    <form onSubmit={handleSubmit} className="formulario-contacto">
         <label>
-          Nombre:
-          <input
+        Nombre:
+        <input
             type="text"
             name="nombre"
             value={formulario.nombre}
             onChange={handleChange}
             required
-          />
+        />
         </label>
 
         <label>
-          Email:
-          <input
+        Email:
+        <input
             type="email"
             name="email"
             value={formulario.email}
             onChange={handleChange}
             required
-          />
+        />
         </label>
 
         <label>
-          Asunto:
-          <input
+        Asunto:
+        <input
             type="text"
             name="asunto"
             value={formulario.asunto}
             onChange={handleChange}
             required
-          />
+        />
         </label>
 
         <label>
-          Mensaje:
-          <textarea
+        Mensaje:
+        <textarea
             name="mensaje"
             value={formulario.mensaje}
             onChange={handleChange}
             required
-          />
+        />
         </label>
 
         <button type="submit">Enviar</button>
-      </form>
+    </form>
     </div>
-  );
+);
 }
 
 

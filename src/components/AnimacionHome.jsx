@@ -17,7 +17,7 @@ const ComicBookAnimation = () => {
       .catch((err) => console.error("Error al cargar cómics:", err));
   }, []);
 
-  // 🚀 Auto scroll infinito
+  
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
@@ -30,7 +30,7 @@ const ComicBookAnimation = () => {
       ) {
         scrollContainer.scrollLeft = 0;
       }
-    }, 20); // Velocidad del scroll
+    }, 20); 
 
     return () => clearInterval(interval);
   }, [imagenes]);
@@ -48,7 +48,7 @@ const ComicBookAnimation = () => {
           </div>
         ))}
       </div>
-      <a href="/productos" className="btn-comics">Ir a los cómics</a>
+      <a href ="/productos" className="btn-comics">Ir a los cómics</a>
     </div>
   );
 };

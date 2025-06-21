@@ -66,7 +66,10 @@ export default function ProductoDetalle() {
 
       <button onClick={AgregarAlCarrito}>Agregar al carrito</button>
       <button className="boton-volver" onClick={() => navigate("/productos")}>
-        Volver a la tienda
+        🛍️Volver a la tienda
+      </button>
+      <button className="boton-carrito" onClick={() => navigate("/carrito")}>
+        🛒 Ir al carrito
       </button>
     </div>
   );

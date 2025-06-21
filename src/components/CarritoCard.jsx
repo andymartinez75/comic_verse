@@ -1,37 +1,41 @@
 import "../styles/Carrito.css";
+import { useCartContext } from "../context/CartContext";
 
-function CarritoCard({ producto, funcionDisparadora, aumentarCantidad, reducirCantidad }) {
-return (
+function CarritoCard({ producto }) {
+  const { borrarDelCarrito, aumentarCantidad, reducirCantidad } = useCartContext();
+
+  return (
     <div className="carrito-card">
-    <h3 className="carrito-titulo" style={{ color: "white" }}>{producto.name}</h3>
-    <p className="descripcion-carrito" style={{ color: "white" }}>{producto.description}</p>
-    <img className="carrito-image" src={producto.imagen} alt={producto.name} />
+      <h3 className="carrito-titulo" style={{ color: "white" }}>{producto.name}</h3>
+      <p className="descripcion-carrito" style={{ color: "white" }}>{producto.description}</p>
+      <img className="carrito-image" src={producto.imagen} alt={producto.name} />
 
-    <div className="carrito-cantidad-controles">
+      <div className="carrito-cantidad-controles">
         <button onClick={() => reducirCantidad(producto.id)} className="cantidad-btn">-</button>
         <span className="cantidad-num">{producto.cantidad}</span>
         <button onClick={() => aumentarCantidad(producto.id)} className="cantidad-btn">+</button>
-    </div>
+      </div>
 
-    <div>
+      <div>
         <p style={{ color: "white" }}>Precio unitario</p>
         <span style={{ color: "white" }}>{producto.price.toFixed(2)} $</span>
-    </div>
-    <div>
+      </div>
+      <div>
         <p style={{ color: "white" }}>Precio total</p>
         <span style={{ color: "white" }}>{(producto.cantidad * producto.price).toFixed(2)} $</span>
-    </div>
+      </div>
 
-    <button
+      <button
         className="boton-carrito"
-        onClick={() => funcionDisparadora(producto.id)}
+        onClick={() => borrarDelCarrito(producto.id)}
         style={{ backgroundColor: "yellow", color: "black" }}
-    >
+      >
         X
-    </button>
+      </button>
     </div>
-);
+  );
 }
 
 export default CarritoCard;
+
 

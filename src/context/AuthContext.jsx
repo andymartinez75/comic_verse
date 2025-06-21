@@ -1,41 +1,43 @@
-import React, { createContext, useContext, useState } from 'react';
-import usuariosData from '../data/usuarios.json'; 
+import { createContext, useContext, useEffect, useState } from "react";
+import usuarios from "../data/usuarios.json";
 
 const AuthContext = createContext();
+export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = (email, password) => {
-    const usuarioEncontrado = usuariosData.find(
-      (u) => u.email === email && u.password === password
-    );
-
-    if (usuarioEncontrado) {
-      setUser({ email: usuarioEncontrado.email, isAdmin: usuarioEncontrado.isAdmin });
-      return true;
-    } else {
-      alert('Credenciales incorrectas');
-      return false;
+  useEffect(() => {
+    const userData = localStorage.getItem("usuarioActual");
+    if (userData) {
+      setUser(JSON.parse(userData));
     }
+  }, []);
+
+  const login = ({ email, password }) => {
+    const found = usuarios.find(u => u.email === email && u.password === password);
+    if (found) {
+      localStorage.setItem("usuarioActual", JSON.stringify(found));
+      setUser(found);
+      return true;
+    }
+    return false;
   };
 
-  const logout = () => setUser(null);
-
-  const registrarUsuario = (email, password) => {
-    
-    console.log(`Usuario registrado: ${email} con clave ${password}`);
-    setUser({ email, isAdmin: false });
+  const logout = () => {
+    localStorage.removeItem("usuarioActual");
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, registrarUsuario }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuthContext = () => useContext(AuthContext);
+
+
 
 
 

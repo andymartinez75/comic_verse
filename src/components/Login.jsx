@@ -1,22 +1,38 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/login.css'; 
+import { useNavigate, useLocation } from 'react-router-dom';
+import '../styles/login.css';
 import { useAuthContext } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 
 const Login = () => {
-  const { login } = useAuthContext();
+  const { login, user } = useAuthContext(); 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  
+  const destino = location.state?.from?.pathname || '/';
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const success = login(email, password);
-    
-    
+    const success = login({ email, password });
 
     if (success) {
-      navigate(email === 'admin' ? '/admin' : '/');
+      Swal.fire('¡Bienvenido!', 'Inicio de sesión exitoso', 'success');
+
+      // Ver
+      setTimeout(() => {
+        if (user?.isAdmin) {
+          navigate('/admin');
+        } else {
+          navigate(destino);
+        }
+      }, 300);
+
+    } else {
+      Swal.fire('Error', 'Credenciales incorrectas', 'error');
     }
   };
 
@@ -25,8 +41,8 @@ const Login = () => {
       <form className="login-form" onSubmit={handleSubmit}>
         <h2>Iniciar sesión</h2>
         <input
-          type="text"
-          placeholder="Email o nombre de usuario"
+          type="email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required

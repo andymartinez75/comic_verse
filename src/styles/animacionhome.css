@@ -2,20 +2,23 @@
   text-align: center;
   padding: 20px;
   background-color: #0f3460;
+  overflow-x: hidden;
+  position: relative;
 }
 
 .book-scroll {
   display: flex;
-  overflow-x: auto;
-  gap: 10px;
+  gap: 20px;
   padding: 10px;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* Firefox */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
 }
 
 .book-scroll::-webkit-scrollbar {
-  display: none; /* Chrome */
+  display: none;
 }
+
 
 .comic-page {
   flex: 0 0 auto;
@@ -24,39 +27,45 @@
   background: black;
   border: 2px solid #dfec23;
   border-radius: 10px;
-  box-shadow: 0 0 15px #dfec23;
+  box-shadow: 0 0 20px #dfec23;
   scroll-snap-align: center;
-  animation: flipIn 0.6s ease forwards;
+  transform: scale(0.9);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.comic-page:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #fffc7a;
 }
 
 .comic-page img {
   width: 100%;
   height: 100%;
-  object-fit:cover;
+  object-fit: cover;
   border-radius: 10px;
 }
 
-@keyframes flipIn {
+@keyframes slideIn {
   from {
-    transform: rotateY(90deg);
+    transform: translateX(-50%);
     opacity: 0;
   }
   to {
-    transform: rotateY(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }
 
 .btn-comics {
-  margin-top: 20px;
-  padding: 10px 20px;
+  margin-top: 30px;
+  padding: 12px 25px;
   background-color: #dfec23;
   color: #0f3460;
   font-weight: bold;
   border: none;
   border-radius: 8px;
+  font-size: 1.1rem;
   text-decoration: none;
-  font-size: 1rem;
   transition: background 0.3s ease;
 }
 
@@ -67,16 +76,17 @@
 .cargando {
   color: white;
   font-size: 1.2rem;
-  text-align: center;
   margin-top: 50px;
 }
 
-/* ✅ Estilo responsive */
+/* Responsive */
 @media (max-width: 768px) {
   .comic-page {
     width: 80vw;
     height: auto;
   }
 }
+
+
 
 

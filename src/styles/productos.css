@@ -58,3 +58,37 @@
 .producto-card button:hover {
     background-color: #07ad52;
 }
+.filtros-productos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.input-busqueda,
+.select-orden {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 5px 2px #dfec23aa;
+    background-color: #111b3a;
+    color: #fff;
+}
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+@media (max-width: 480px) {
+.producto-card {
+    width: 100%;
+    max-width: 300px;
+}
+}

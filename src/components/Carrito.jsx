@@ -2,9 +2,8 @@ import "../styles/Carrito.css";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useCartContext } from "../context/CartContext";
 import { useAuthContext } from "../context/AuthContext";
-import CarritoCard from "./CarritoCard";
-
-
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 
 export default function Carrito() {
   const {
@@ -13,13 +12,27 @@ export default function Carrito() {
     aumentarCantidad,
     reducirCantidad
   } = useCartContext();
-  
-  const { user } = useAuthContext();
 
+  const { user } = useAuthContext();
   const navigate = useNavigate();
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
+
+  const [mostroAlerta, setMostroAlerta] = useState(false);
+
+  useEffect(() => {
+    if (!user && !mostroAlerta) {
+      setMostroAlerta(true); // Evita que se dispare múltiples veces
+      Swal.fire({
+        icon: "info",
+        title: "Debes iniciar sesión",
+        text: "Inicia sesión o regístrate para acceder al carrito",
+        confirmButtonText: "Ir al login"
+      }).then(() => {
+        navigate("/login");
+      });
+    }
+  }, [user, mostroAlerta, navigate]);
+
+  if (!user) return null;
 
   if (user.isAdmin) {
     return <Navigate to="/admin" />;
@@ -63,7 +76,7 @@ export default function Carrito() {
                 <button onClick={() => aumentarCantidad(producto.id)}>+</button>
               </span>
               <span>{Number(producto.price).toFixed(2)} $</span>
-              <span>{Number(producto.price)* (producto.cantidad).toFixed(2)} $</span>
+              <span>{(producto.price * producto.cantidad).toFixed(2)} $</span>
               <button
                 onClick={() => borrarDelCarrito(producto.id)}
                 className="boton-borrar"
@@ -81,7 +94,7 @@ export default function Carrito() {
             Total a pagar: ${total.toFixed(2)}
           </div>
           <div style={{ textAlign: "center", marginTop: "1rem" }}>
-            <button onClick={() => navigate('/productos')} className="boton-volver">
+            <button onClick={() => navigate("/productos")} className="boton-volver">
               🛍️ Seguir comprando
             </button>
           </div>
@@ -90,5 +103,6 @@ export default function Carrito() {
     </div>
   );
 }
+
 
 

@@ -69,6 +69,18 @@ return (
             Cerrar sesión
             </button>
         )}
+        {!user && (
+            <button
+            onClick={() => {
+            cerrarMenu();
+            navigate('/registro');
+        }}
+    className="boton-login"
+    >
+    Registrarse
+    </button>
+)}
+
         </li>
     </ul>
     </nav>

@@ -1,83 +1,63 @@
-import React, { useState } from 'react';
-import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../context/AuthContext';
+import React, { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import "../styles/registro.css";
 
 const Registro = () => {
-    const { registrarUsuario } = useAuthContext();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const { registrarUsuario } = useAuthContext();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmarPassword, setConfirmarPassword] = useState("");
+  const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-
-    if (password !== confirmPassword) {
-        setError('Las contraseñas no coinciden');
-        return;
+    if (!email || !password || !confirmarPassword) {
+      Swal.fire("Error", "Todos los campos son obligatorios", "error");
+      return;
     }
-
-    if (password.length < 6) {
-        setError('La contraseña debe tener al menos 6 caracteres');
-        return;
+    if (password !== confirmarPassword) {
+      Swal.fire("Error", "Las contraseñas no coinciden", "error");
+      return;
     }
-
-    const resultado = registrarUsuario(email, password);
-
-    if (resultado.success) {
-    Swal.fire('Registro exitoso', 'Ahora puedes iniciar sesión.', 'success');
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-    navigate('/login');
+    const exito = await registrarUsuario(email, password);
+    if (exito) {
+      Swal.fire("¡Registro exitoso!", "Ya puedes iniciar sesión.", "success");
+      navigate("/login");
     } else {
-    Swal.fire('Error', resultado.mensaje, 'error');
+      Swal.fire("Error", "Ese correo ya está registrado.", "error");
     }
-    };
+  };
 
-return (
-    <div className="registro-container">
-        <h2>Registro de Usuario</h2>
-        <form onSubmit={handleSubmit} className="form-registro">
-        <div>
-            <label>Email:</label>
-            <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            placeholder="tu@email.com"
+  return (
+    <div className="registro-contenedor">
+      <h2 className="registro-titulo">Registro de Usuario</h2>
+      <form onSubmit={handleSubmit} className="registro-form">
+        <input
+          type="email"
+          placeholder="Email: tu@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        </div>
-        <div>
-            <label>Contraseña:</label>
-            <input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            placeholder="Mínimo 6 caracteres"
+        <input
+          type="password"
+          placeholder="Contraseña: Mínimo 6 caracteres"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        </div>
-        <div>
-            <label>Confirmar Contraseña:</label>
-            <input
-            type="password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            required
-            placeholder="Repetir contraseña"
+        <input
+          type="password"
+          placeholder="Confirmar Contraseña: Repetir contraseña"
+          value={confirmarPassword}
+          onChange={(e) => setConfirmarPassword(e.target.value)}
         />
-        </div>
-        {error && <p className="error">{error}</p>}
-        <button type="submit" className="btn-registrar">Registrarse</button>
-    </form>
+        <button type="submit" className="registro-boton">
+          Registrarse
+        </button>
+      </form>
     </div>
-);
+  );
 };
 
 export default Registro;
-

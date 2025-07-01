@@ -1,42 +1,43 @@
 import "../styles/Carrito.css";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../context/CartContext";
 import { useAuthContext } from "../context/AuthContext";
-import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export default function Carrito() {
   const {
     productosCarrito,
     borrarDelCarrito,
     aumentarCantidad,
-    reducirCantidad
+    reducirCantidad,
   } = useCartContext();
 
   const { user } = useAuthContext();
   const navigate = useNavigate();
-
-  const [mostroAlerta, setMostroAlerta] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user && !mostroAlerta) {
-      setMostroAlerta(true); // Evita que se dispare múltiples veces
-      Swal.fire({
-        icon: "info",
-        title: "Debes iniciar sesión",
-        text: "Inicia sesión o regístrate para acceder al carrito",
-        confirmButtonText: "Ir al login"
-      }).then(() => {
-        navigate("/login");
-      });
-    }
-  }, [user, mostroAlerta, navigate]);
+    // Esperamos a que el componente monte
+    setTimeout(() => {
+      if (!user) {
+        Swal.fire({
+          icon: "info",
+          title: "Debes iniciar sesión",
+          text: "Para ver tu carrito, primero inicia sesión o regístrate.",
+          confirmButtonText: "Ir al login",
+        }).then(() => {
+          navigate("/login");
+        });
+      } else if (user.isAdmin) {
+        navigate("/admin");
+      } else {
+        setLoading(false);
+      }
+    }, 100); // pequeño retraso para permitir el montaje
+  }, [user, navigate]);
 
-  if (!user) return null;
-
-  if (user.isAdmin) {
-    return <Navigate to="/admin" />;
-  }
+  if (loading) return null;
 
   const total = productosCarrito.reduce(
     (subTotal, producto) => subTotal + producto.price * producto.cantidad,
@@ -76,7 +77,9 @@ export default function Carrito() {
                 <button onClick={() => aumentarCantidad(producto.id)}>+</button>
               </span>
               <span>{Number(producto.price).toFixed(2)} $</span>
-              <span>{(producto.price * producto.cantidad).toFixed(2)} $</span>
+              <span>
+                {(producto.price * producto.cantidad).toFixed(2)} $
+              </span>
               <button
                 onClick={() => borrarDelCarrito(producto.id)}
                 className="boton-borrar"
@@ -94,7 +97,10 @@ export default function Carrito() {
             Total a pagar: ${total.toFixed(2)}
           </div>
           <div style={{ textAlign: "center", marginTop: "1rem" }}>
-            <button onClick={() => navigate("/productos")} className="boton-volver">
+            <button
+              onClick={() => navigate("/productos")}
+              className="boton-volver"
+            >
               🛍️ Seguir comprando
             </button>
           </div>
@@ -103,6 +109,8 @@ export default function Carrito() {
     </div>
   );
 }
+
+
 
 
 

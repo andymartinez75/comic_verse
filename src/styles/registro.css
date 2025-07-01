@@ -1,0 +1,48 @@
+.registro-contenedor {
+  max-width: 500px;
+  margin: 2rem auto;
+  background-color: #1a1a2e;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(223, 236, 35, 0.2);
+  font-family: "Comic Neue", cursive;
+  color: #fff;
+}
+
+.registro-titulo {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: white;
+  font-family: "Bangers", cursive;
+}
+
+.registro-form input {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: none;
+  font-family: "Comic Neue", cursive;
+}
+
+.registro-form input::placeholder {
+  color: #999;
+}
+
+.registro-boton {
+  background-color: #dfec23;
+  color: #0f3460;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: "Bangers", cursive;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.registro-boton:hover {
+  background-color: #07ad52;
+  color: #fff;
+}

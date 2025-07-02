@@ -3,12 +3,14 @@ import ProductoCard from "./Card";
 import "../styles/productos.css";
 import { useCartContext } from "../context/CartContext";
 import { useProductsContext } from "../context/ProductsContext";
+import Paginador from "./Paginador";
 
 export default function ProductosContainer() {
   const { productos } = useProductsContext();
   const { funcionCarrito } = useCartContext();
   const [busqueda, setBusqueda] = useState("");
   const [orden, setOrden] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
 
   const productosFiltrados = productos.filter((prod) =>
     prod.name.toLowerCase().includes(busqueda.toLowerCase())
@@ -29,6 +31,14 @@ export default function ProductosContainer() {
     }
   });
 
+  const productosPorPagina = 5;
+  const totalPaginas = Math.ceil(productosOrdenados.length / productosPorPagina);
+  const indiceInicial = (paginaActual - 1) * productosPorPagina;
+  const productosActuales = productosOrdenados.slice(
+    indiceInicial,
+    indiceInicial + productosPorPagina
+  );
+
   return (
     <div className="productos-container">
       <h2 className="titulo">Cómics disponibles</h2>
@@ -38,14 +48,20 @@ export default function ProductosContainer() {
           type="text"
           placeholder="Buscar cómics por nombre..."
           value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
+          onChange={(e) => {
+            setBusqueda(e.target.value);
+            setPaginaActual(1);
+          }}
           className="input-busqueda"
         />
 
         <select
           className="select-orden"
           value={orden}
-          onChange={(e) => setOrden(e.target.value)}
+          onChange={(e) => {
+            setOrden(e.target.value);
+            setPaginaActual(1);
+          }}
         >
           <option value="">Ordenar por...</option>
           <option value="nombre-asc">Nombre A-Z</option>
@@ -56,7 +72,7 @@ export default function ProductosContainer() {
       </div>
 
       <div className="productos-grid">
-        {productosOrdenados.map((producto) => (
+        {productosActuales.map((producto) => (
           <ProductoCard
             key={producto.id}
             producto={producto}
@@ -64,8 +80,17 @@ export default function ProductosContainer() {
           />
         ))}
       </div>
+
+      {totalPaginas > 1 && (
+        <Paginador
+          totalPaginas={totalPaginas}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
+      )}
     </div>
   );
 }
+
 
 

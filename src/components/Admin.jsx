@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import "../styles/admin.css";
+import { toast } from 'react-toastify';
 import { useProductsContext } from '../context/ProductsContext';
+import '../styles/admin.css';
 
 const Admin = () => {
   const { productos, crearProducto, editarProducto, eliminarProducto } = useProductsContext();
 
-  const [nuevoProducto, setNuevoProducto] = useState({
-    name: '',
-    price: '',
-    imagen: '',
-    description: ''
-  });
-
+  const [nuevoProducto, setNuevoProducto] = useState({ name: '', price: '', imagen: '', description: '' });
   const [busqueda, setBusqueda] = useState('');
+  const [paginaActual, setPaginaActual] = useState(1);
+  const productosPorPagina = 5;
 
   const productosFiltrados = productos.filter((prod) =>
     prod.name.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
+  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+  const productosEnPagina = productosFiltrados.slice(
+    (paginaActual - 1) * productosPorPagina,
+    paginaActual * productosPorPagina
   );
 
   const handleChange = (e) => {
@@ -24,36 +27,37 @@ const Admin = () => {
   };
 
   const handleCrear = async () => {
-    // Validaciones
-    if (!nuevoProducto.name || !nuevoProducto.price || !nuevoProducto.imagen || !nuevoProducto.description) {
-      Swal.fire('Campos incompletos', 'Por favor completa todos los campos.', 'warning');
+    const { name, price, imagen, description } = nuevoProducto;
+
+    if (!name || !price || !imagen || !description) {
+      toast.warn('Por favor completa todos los campos.');
       return;
     }
 
-    if (!nuevoProducto.name.trim() || nuevoProducto.name.length < 3) {
-      Swal.fire('Nombre inválido', 'El nombre debe tener al menos 3 caracteres.', 'warning');
+    if (!name.trim() || name.length < 3) {
+      toast.warn('El nombre debe tener al menos 3 caracteres.');
       return;
     }
 
-    if (isNaN(nuevoProducto.price) || Number(nuevoProducto.price) <= 0) {
-      Swal.fire('Precio inválido', 'El precio debe ser un número mayor a 0.', 'warning');
+    if (isNaN(price) || Number(price) <= 0) {
+      toast.warn('El precio debe ser un número válido.');
       return;
     }
 
     const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
-    if (!urlRegex.test(nuevoProducto.imagen)) {
-      Swal.fire('URL de imagen inválida', 'Debe ser una URL válida que termine en .jpg, .png, etc.', 'warning');
+    if (!urlRegex.test(imagen)) {
+      toast.warn('La imagen debe ser una URL válida.');
       return;
     }
 
-    if (!nuevoProducto.description.trim() || nuevoProducto.description.length < 10) {
-      Swal.fire('Descripción inválida', 'Debe tener al menos 10 caracteres.', 'warning');
+    if (!description.trim() || description.length < 10) {
+      toast.warn('La descripción debe tener al menos 10 caracteres.');
       return;
     }
 
     await crearProducto(nuevoProducto);
     setNuevoProducto({ name: '', price: '', imagen: '', description: '' });
-    Swal.fire('Producto creado', '', 'success');
+    toast.success('Producto creado exitosamente');
   };
 
   const handleEliminar = async (id) => {
@@ -68,7 +72,7 @@ const Admin = () => {
 
     if (confirm.isConfirmed) {
       await eliminarProducto(id);
-      Swal.fire('Producto eliminado', '', 'success');
+      toast.success('Producto eliminado');
     }
   };
 
@@ -96,30 +100,31 @@ const Admin = () => {
     });
 
     if (formValues) {
-      // Validaciones
-      if (!formValues.name.trim() || formValues.name.length < 3) {
-        Swal.fire('Nombre inválido', 'Debe tener al menos 3 caracteres.', 'warning');
+      const { name, price, imagen, description } = formValues;
+
+      if (!name.trim() || name.length < 3) {
+        toast.warn('El nombre debe tener al menos 3 caracteres.');
         return;
       }
 
-      if (isNaN(formValues.price) || Number(formValues.price) <= 0) {
-        Swal.fire('Precio inválido', 'Debe ser un número mayor a 0.', 'warning');
+      if (isNaN(price) || Number(price) <= 0) {
+        toast.warn('Precio inválido');
         return;
       }
 
       const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
-      if (!urlRegex.test(formValues.imagen)) {
-        Swal.fire('Imagen inválida', 'Debe ser una URL válida de imagen.', 'warning');
+      if (!urlRegex.test(imagen)) {
+        toast.warn('URL de imagen inválida');
         return;
       }
 
-      if (!formValues.description.trim() || formValues.description.length < 10) {
-        Swal.fire('Descripción inválida', 'Debe tener al menos 10 caracteres.', 'warning');
+      if (!description.trim() || description.length < 10) {
+        toast.warn('Descripción demasiado corta');
         return;
       }
 
       await editarProducto(producto.id, formValues);
-      Swal.fire('Producto actualizado', '', 'success');
+      toast.success('Producto actualizado');
     }
   };
 
@@ -128,49 +133,19 @@ const Admin = () => {
       <h2 className="admin-title">Panel de Administración</h2>
 
       <div className="formulario-crear">
-        <input
-          type="text"
-          name="name"
-          placeholder="Nombre"
-          value={nuevoProducto.name}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="price"
-          placeholder="Precio"
-          value={nuevoProducto.price}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="imagen"
-          placeholder="URL de la imagen"
-          value={nuevoProducto.imagen}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="description"
-          placeholder="Descripción"
-          value={nuevoProducto.description}
-          onChange={handleChange}
-        />
+        <input type="text" name="name" placeholder="Nombre" value={nuevoProducto.name} onChange={handleChange} />
+        <input type="text" name="price" placeholder="Precio" value={nuevoProducto.price} onChange={handleChange} />
+        <input type="text" name="imagen" placeholder="URL de la imagen" value={nuevoProducto.imagen} onChange={handleChange} />
+        <input type="text" name="description" placeholder="Descripción" value={nuevoProducto.description} onChange={handleChange} />
         <button className="btn-crear" onClick={handleCrear}>Crear producto</button>
       </div>
 
       <div className="buscador">
-        <input
-          type="text"
-          placeholder="Buscar por nombre..."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-          className="input-busqueda"
-        />
+        <input type="text" placeholder="Buscar por nombre..." value={busqueda} onChange={(e) => setBusqueda(e.target.value)} className="input-busqueda" />
       </div>
 
       <div className="productos-grid">
-        {productosFiltrados.map((prod) => (
+        {productosEnPagina.map((prod) => (
           <div className="card-admin" key={prod.id}>
             <img src={prod.imagen} alt={prod.name} />
             <h3>{prod.name}</h3>
@@ -183,6 +158,21 @@ const Admin = () => {
           </div>
         ))}
       </div>
+
+      {/* PAGINADOR */}
+      {totalPaginas > 1 && (
+        <div className="paginador">
+          {Array.from({ length: totalPaginas }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setPaginaActual(i + 1)}
+              className={paginaActual === i + 1 ? 'pagina-activa' : ''}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

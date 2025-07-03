@@ -14,6 +14,8 @@ import Login from './components/Login';
 import RutaPrivada from './components/RutaPrivada';
 import Registro from './components/Registro';
 import { useAuthContext } from './context/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { user } = useAuthContext();
@@ -26,7 +28,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        {/* Redirige admin fuera de comics */}
         <Route
           path="/productos"
           element={
@@ -64,11 +65,14 @@ function App() {
       </Routes>
 
       <Footer />
+
+      
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 }
-
 export default App;
+
 
 
 

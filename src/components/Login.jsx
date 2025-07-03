@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/login.css';
 import { useAuthContext } from '../context/AuthContext';
-import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+
 
 const Login = () => {
   const { login, user } = useAuthContext(); 
@@ -20,7 +21,7 @@ const Login = () => {
     const success = login({ email, password });
 
     if (success) {
-      Swal.fire('¡Bienvenido!', 'Inicio de sesión exitoso', 'success');
+      toast.success('¡Bienvenido!', 'Inicio de sesión exitoso', 'success');
 
       // Ver
       setTimeout(() => {
@@ -32,7 +33,7 @@ const Login = () => {
       }, 300);
 
     } else {
-      Swal.fire('Error', 'Credenciales incorrectas', 'error');
+      toast.error('Error', 'Credenciales incorrectas', 'error');
     }
   };
 

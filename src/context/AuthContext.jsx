@@ -20,14 +20,15 @@ export const AuthProvider = ({ children }) => {
     if (found) {
       localStorage.setItem("usuarioActual", JSON.stringify(found));
       setUser(found);
-      return true;
+      return found;
     }
-    return false;
+    return null;
   };
 
   const logout = () => {
     localStorage.removeItem("usuarioActual");
     setUser(null);
+    window.location.href = "/"; 
   };
 
   const registrarUsuario = (email, password, isAdmin = false) => {

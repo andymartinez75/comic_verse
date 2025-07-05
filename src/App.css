@@ -43,3 +43,23 @@ body {
   padding: 0;
   width: 100%;
 }
+.toast-container {
+  font-family: 'Comic Neue', cursive;
+}
+
+.toast-estilo {
+  background-color: #0f3460 !important;
+  color: #dfec23 !important;
+  border-radius: 12px !important;
+  font-size: 1rem !important;
+  box-shadow: 0 0 10px rgba(223, 236, 35, 0.3) !important;
+}
+
+.toast-body {
+  font-size: 1rem;
+}
+
+.toast-progress {
+  background: #dfec23 !important;
+}
+

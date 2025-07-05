@@ -66,8 +66,16 @@ function App() {
 
       <Footer />
 
-      
-      <ToastContainer position="top-center" autoClose={3000} />
+      <ToastContainer
+  position="top-center"
+  autoClose={3000}
+  className="toast-container"
+  toastClassName="toast-estilo"
+  bodyClassName="toast-body"
+  progressClassName="toast-progress"
+/>
+
+
     </div>
   );
 }

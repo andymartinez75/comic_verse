@@ -4,13 +4,10 @@ import '../styles/login.css';
 import { useAuthContext } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 
-
 const Login = () => {
-  const { login, user } = useAuthContext(); 
+  const { login } = useAuthContext(); 
   const navigate = useNavigate();
   const location = useLocation();
-
-  
   const destino = location.state?.from?.pathname || '/';
 
   const [email, setEmail] = useState('');
@@ -18,22 +15,29 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const success = login({ email, password });
 
-    if (success) {
-      toast.success('¡Bienvenido!', 'Inicio de sesión exitoso', 'success');
+    const usuarioLogueado = login({ email, password });
 
-      // Ver
+    if (usuarioLogueado) {
+      toast.success('¡Bienvenido!', {
+        className: 'toast-estilo',
+        bodyClassName: 'toast-body',
+        progressClassName: 'toast-progress'
+      });
+
       setTimeout(() => {
-        if (user?.isAdmin) {
+        if (usuarioLogueado.isAdmin) {
           navigate('/admin');
         } else {
           navigate(destino);
         }
       }, 300);
-
     } else {
-      toast.error('Error', 'Credenciales incorrectas', 'error');
+      toast.error('Credenciales incorrectas', {
+        className: 'toast-estilo',
+        bodyClassName: 'toast-body',
+        progressClassName: 'toast-progress'
+      });
     }
   };
 
@@ -62,4 +66,5 @@ const Login = () => {
 };
 
 export default Login;
+
 

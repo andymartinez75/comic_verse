@@ -30,34 +30,58 @@ const Admin = () => {
     const { name, price, imagen, description } = nuevoProducto;
 
     if (!name || !price || !imagen || !description) {
-      toast.warn('Por favor completa todos los campos.');
+      toast.warn('Por favor completa todos los campos.',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
       return;
     }
 
     if (!name.trim() || name.length < 3) {
-      toast.warn('El nombre debe tener al menos 3 caracteres.');
+      toast.warn('El nombre debe tener al menos 3 caracteres.',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
       return;
     }
 
     if (isNaN(price) || Number(price) <= 0) {
-      toast.warn('El precio debe ser un número válido.');
+      toast.warn('El precio debe ser un número válido.',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
       return;
     }
 
     const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
     if (!urlRegex.test(imagen)) {
-      toast.warn('La imagen debe ser una URL válida.');
+      toast.warn('La imagen debe ser una URL válida.',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
       return;
     }
 
     if (!description.trim() || description.length < 10) {
-      toast.warn('La descripción debe tener al menos 10 caracteres.');
+      toast.warn('La descripción debe tener al menos 10 caracteres.',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
       return;
     }
 
     await crearProducto(nuevoProducto);
     setNuevoProducto({ name: '', price: '', imagen: '', description: '' });
-    toast.success('Producto creado exitosamente');
+    toast.success('Producto creado exitosamente',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
   };
 
   const handleEliminar = async (id) => {
@@ -72,7 +96,11 @@ const Admin = () => {
 
     if (confirm.isConfirmed) {
       await eliminarProducto(id);
-      toast.success('Producto eliminado');
+      toast.success('Producto eliminado',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
     }
   };
 
@@ -103,28 +131,48 @@ const Admin = () => {
       const { name, price, imagen, description } = formValues;
 
       if (!name.trim() || name.length < 3) {
-        toast.warn('El nombre debe tener al menos 3 caracteres.');
+        toast.warn('El nombre debe tener al menos 3 caracteres.',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
         return;
       }
 
       if (isNaN(price) || Number(price) <= 0) {
-        toast.warn('Precio inválido');
+        toast.warn('Precio inválido',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
         return;
       }
 
       const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
       if (!urlRegex.test(imagen)) {
-        toast.warn('URL de imagen inválida');
+        toast.warn('URL de imagen inválida',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
         return;
       }
 
       if (!description.trim() || description.length < 10) {
-        toast.warn('Descripción demasiado corta');
+        toast.warn('Descripción demasiado corta',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
         return;
       }
 
       await editarProducto(producto.id, formValues);
-      toast.success('Producto actualizado');
+      toast.success('Producto actualizado',{
+  className: "toast-estilo",
+  bodyClassName: "toast-body",
+  progressClassName: "toast-progress"
+});
     }
   };
 

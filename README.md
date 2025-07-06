@@ -1,4 +1,6 @@
-# Comic Verse
+# Proyecto Vite + React
+
+## Comic Verse
 Es una tienda virtual de cómics que permite a usuarios navegar productos, agregarlos a un carrito de compras y registrarse/iniciar sesión.
 Los administradores pueden acceder a un panel especial para crear, editar y eliminar productos.
 Tecnologías utilizadas

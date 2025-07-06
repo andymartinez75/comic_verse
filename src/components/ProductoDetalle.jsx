@@ -37,11 +37,20 @@ export default function ProductoDetalle() {
   }, [id]);
 
   if (redirigir) return <Navigate to="/admin" />;
-
   if (!producto) return <p>Cargando...</p>;
 
   const AgregarAlCarrito = () => {
-    agregarAlCarrito({ ...producto, cantidad });
+    const productoConCantidad = {
+      id: producto.id,
+      name: producto.name,
+      description: producto.description,
+      imagen: producto.imagen,
+      price: Number(producto.price),
+      cantidad: Number(cantidad),
+    };
+
+    agregarAlCarrito(productoConCantidad);
+
     Swal.fire({
       icon: "success",
       title: "Producto agregado",
@@ -66,7 +75,7 @@ export default function ProductoDetalle() {
 
       <button onClick={AgregarAlCarrito}>Agregar al carrito</button>
       <button className="boton-volver" onClick={() => navigate("/productos")}>
-        🛍️Volver a la tienda
+        🛍️ Volver a la tienda
       </button>
       <button className="boton-carrito" onClick={() => navigate("/carrito")}>
         🛒 Ir al carrito

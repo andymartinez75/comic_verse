@@ -1,12 +1,25 @@
-# React + Vite
+# Comic Verse
+Es una tienda virtual de cómics que permite a usuarios navegar productos, agregarlos a un carrito de compras y registrarse/iniciar sesión.
+Los administradores pueden acceder a un panel especial para crear, editar y eliminar productos.
+Tecnologías utilizadas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- React
+- React Router DOM
+- SweetAlert2
+- React Toastify
+- React-icons
+- React Helmet Async
+- CSS personalizado con fuentes de Google Fonts
+- MockAPI para persistencia temporal de productos(https://6817f7ec5a4b07b9d1cda7c7.mockapi.io/productos)
+- Postimage para las url de las imagenes(https://postimg.cc/gallery/p29Gd5M/29903455)
 
-Currently, two official plugins are available:
+Si bien se pueden registrar usuarios nuevos para probar utilizamos los usuarios de data en json: 
+    "email": "admin@comicverse"
+    "password": "admin123"
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    "email": "usuario@comicverse"
+    "password": "usuario123"
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+Autor: Andrea B Martinez (https://github.com/andymartinez75/comic_verse.git)
